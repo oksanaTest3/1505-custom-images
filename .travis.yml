@@ -4,7 +4,7 @@ dist: focal
 
 env:
   global:
-    - JOB_DELAY=180  # Delay to simulate concurrent execution
+    - JOB_DELAY=180
 
 jobs:
   include:
@@ -16,7 +16,6 @@ jobs:
       script:
         - echo "Running Job 1"
         - sleep $JOB_DELAY
-
     - stage: "Tests"
       name: "Create custom image 2 (conflict)"
       vm:
@@ -25,7 +24,6 @@ jobs:
       script:
         - echo "Running Job 2"
         - sleep $JOB_DELAY
-
     - stage: "Tests"
       name: "Create unique custom image"
       vm:
