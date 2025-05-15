@@ -4,4 +4,4 @@
 
 vm:
   use:
-    name: custom-image-1505
+    name: non-existing-image
