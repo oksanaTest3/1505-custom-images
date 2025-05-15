@@ -2,15 +2,35 @@ os: linux
 language: generic
 dist: focal
 
+env:
+  global:
+    - JOB_DELAY=180  # Delay to simulate concurrent execution
+
 jobs:
   include:
-    - stage: create image
-      name: "Job 1 – Create image"
+    - stage: "Tests"
+      name: "Create custom image 1 (conflict)"
       vm:
         create:
-          name: same-custom-image
-    - stage: create image
-      name: "Job 2 – Create image"
+          name: concurrent-job-test
+      script:
+        - echo "Running Job 1"
+        - sleep $JOB_DELAY
+
+    - stage: "Tests"
+      name: "Create custom image 2 (conflict)"
       vm:
         create:
-          name: same-custom-image
+          name: concurrent-job-test
+      script:
+        - echo "Running Job 2"
+        - sleep $JOB_DELAY
+
+    - stage: "Tests"
+      name: "Create unique custom image"
+      vm:
+        create:
+          name: concurrent-job-unique
+      script:
+        - echo "Running Unique Image Job"
+        - sleep $JOB_DELAY
